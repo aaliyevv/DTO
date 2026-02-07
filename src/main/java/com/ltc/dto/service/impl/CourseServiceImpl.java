@@ -69,5 +69,33 @@ public class CourseServiceImpl implements CourseService {
                                 course.getStudentSurname())).toList();
     }
 
+    @Override
+    public CourseResponseDTO update(Long id, CourseRequestDTO courseRequestDTO) {
+        CourseEntity existDb = courseRepo.findById(id).orElseThrow(() ->
+                new CourseNotFoundException("Course Not Found" + id));
 
+        existDb.setCourseName(courseRequestDTO.getCourseName());
+        existDb.setStudentName(courseRequestDTO.getStudentName());
+        existDb.setStudentSurname(courseRequestDTO.getStudentSurname());
+
+        CourseEntity dbSaving = courseRepo.save(existDb);
+
+        CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
+
+        courseResponseDTO.setId(dbSaving.getId());
+        courseResponseDTO.setCourseName(dbSaving.getCourseName());
+        courseResponseDTO.setStudentName(dbSaving.getStudentName());
+        courseResponseDTO.setStudentSurname(dbSaving.getStudentSurname());
+
+        return courseResponseDTO;
+
+    }
+
+    @Override
+    public void delete(Long id) {
+        if(!courseRepo.existsById(id)) {
+            throw new CourseNotFoundException("Course Not Found" + id);
+        }
+        courseRepo.deleteById(id);
+    }
 }
