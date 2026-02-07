@@ -37,43 +37,5 @@ public class CourseController{
     }
 
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get course by id")
-    @ApiResponse(responseCode = "200", description = "Course found")
-    @ApiResponse(responseCode = "404", description = "Course not found")
-    public ResponseEntity<CourseResponseDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(courseService.getById(id));
-    }
-
-    @GetMapping
-    @Operation(summary = "Get all courses")
-    @ApiResponse(responseCode = "200", description = "Courses retrieved successfully")
-    public ResponseEntity<List<CourseResponseDTO>> getAll(){
-        return ResponseEntity.ok(courseService.getAll());
-    }
-
-    @PutMapping("/{id}")
-    @Operation(summary = "Update course by id")
-    @ApiResponse(responseCode = "200", description = "Course updated successfully")
-    @ApiResponse(responseCode = "404", description = "Course not found")
-    public ResponseEntity<CourseResponseDTO> update(
-            @PathVariable Long id,
-            @Valid @RequestBody CourseRequestDTO courseRequestDTO){
-
-        return ResponseEntity.ok(courseService.update(id, courseRequestDTO));
-    }
-
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete course by id")
-    @ApiResponse(responseCode = "200", description = "Course deleted successfully")
-    @ApiResponse(responseCode = "404", description = "Course not found")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-
-        courseService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
-
 
 }
